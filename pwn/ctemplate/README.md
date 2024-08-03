@@ -3,9 +3,9 @@
 
 This is only to use as a problem template. Do not set up!!
 
-*/scripts* - docker scripts. create-debug.sh creates easy challenge dev environment.
-*/attachments* - provided attachment files.
-*/challenge* - challenge files.
+*/scripts* - docker scripts. create-debug.sh creates easy challenge dev environment.  
+*/attachments* - provided attachment files.  
+*/challenge* - challenge files.  
 
 **Connect** with "localhost:1337".
 
