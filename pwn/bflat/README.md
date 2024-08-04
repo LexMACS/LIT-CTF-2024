@@ -1,7 +1,7 @@
 # How to Raise a Boring Vuln Flat
 ## Rythm
 
-Try sorting this out.
+Exploiting programs is just a game.
 
 **Connect**: localhost:1337  
 **Provided**: bflat libc.so.6
