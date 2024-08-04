@@ -24,7 +24,7 @@ int main(){
   int n, type;
   int *a;
 
-  puts("How to raise a boring vuln.\n");
+  puts("How to raise a boring vuln (flat).\n");
 
   puts("How many ints?");
   scanf("%d", &n);
