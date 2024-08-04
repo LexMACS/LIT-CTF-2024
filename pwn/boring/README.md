@@ -1,8 +1,8 @@
 # How to Raise a Boring Vuln
 ## Rythm
 
-This is only to use as a problem template. Do not set up!!
+Try sorting this out.
 
 **Connect** with "localhost:1337".
 
-**Provided**: boring ld-linux-x86-64.so.2 libc.so.6
+**Provided**: boring libc.so.6
