@@ -1,9 +1,17 @@
 #!/bin/bash
 
-apt install -y python3 python3-pip gdb git vim tmux
+cd /debug
+
+apt install -y python3 python3-pip gdb git vim tmux elfutils
+
+rm /usr/lib/python*/EXTERNALLY-MANAGED
 pip3 install pwntools
 
-git clone https://github.com/longld/peda.git ~/peda
-echo "source ~/peda/peda.py" >> ~/.gdbinit
+git clone https://github.com/pwndbg/pwndbg
+cd pwndbg
+./setup.sh
 
-tmux
+cd /debug
+
+#remember to hold "shift" when selecting stuff with mouse for copy/paste
+tmux new-session "tmux setw -g mouse on; bash"

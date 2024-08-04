@@ -1,4 +1,4 @@
-# How to Raise a Boring Challenge
+# How to Raise a Boring Vuln
 ## Rythm
 
 This is only to use as a problem template. Do not set up!!
