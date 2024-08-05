@@ -5,7 +5,15 @@ networks:
         external: true
     isolate-boring:
         external: true
-    isolate-iloveseccomp:
+    isolate-w4dup2de:
+        external: true
+    isolate-infiniteecho:
+        external: true
+    isolate-litarcade:
+        external: true
+    isolate-funcpairing:
+        external: true
+    isolate-bflat:
         external: true
 
 volumes:
@@ -28,9 +36,10 @@ services:
         cap_drop:
             - ALL
 
-    iloveseccomp:
-        build: ./pwn/iloveseccomp/challenge
+    w4dup2de:
+        build: ./pwn/w4dup2de/challenge
         restart: unless-stopped
+        privileged: true
         ports:
             - "31771:5000"
         deploy:
@@ -39,6 +48,69 @@ services:
                     cpus: '0.50'
                     memory: 250M
         networks:
-            - isolate-iloveseccomp
+            - isolate-w4dup2de
+        cap_drop:
+            - ALL
+
+    infiniteecho:
+        build: ./pwn/infiniteecho/challenge
+        restart: unless-stopped
+        privileged: true
+        ports:
+            - "31772:5000"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - isolate-infiniteecho
+        cap_drop:
+            - ALL
+
+    litarcade:
+        build: ./pwn/litarcade/challenge
+        restart: unless-stopped
+        privileged: true
+        ports:
+            - "31773:5000"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - isolate-litarcade
+        cap_drop:
+            - ALL
+
+    funcpairing:
+        build: ./pwn/funcpairing/challenge
+        restart: unless-stopped
+        privileged: true
+        ports:
+            - "31774:5000"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - isolate-funcpairing
+        cap_drop:
+            - ALL
+
+    bflat:
+        build: ./pwn/bflat/challenge
+        restart: unless-stopped
+        ports:
+            - "31775:1337"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - isolate-bflat
         cap_drop:
             - ALL

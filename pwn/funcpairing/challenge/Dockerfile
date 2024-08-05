@@ -24,7 +24,7 @@ RUN cd /nsjail && make && mv /nsjail/nsjail /bin && rm -rf -- /nsjail
 RUN apt-get install -y python3-dev
 RUN apt-get install -y binutils-gold
 
-COPY main /home/user/main
+COPY vuln /home/user/vuln
 COPY flag.txt /home/user/flag.txt
 COPY run.sh /home/user/run.sh
 
