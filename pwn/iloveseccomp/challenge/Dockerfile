@@ -11,6 +11,7 @@ RUN apt-get -y update && apt-get install -y \
     git \
     libprotobuf-dev \
     libnl-route-3-dev \
+    libseccomp-dev \
     libtool \
     make \
     pkg-config \
@@ -22,6 +23,9 @@ RUN cd /nsjail && make && mv /nsjail/nsjail /bin && rm -rf -- /nsjail
 
 RUN apt-get install -y python3-dev
 RUN apt-get install -y binutils-gold
+
+RUN apt-get install python3-pip -y
+RUN pip install pwntools
 
 COPY main /home/user/main
 COPY libc-2.31.so /home/user/libc-2.31.so

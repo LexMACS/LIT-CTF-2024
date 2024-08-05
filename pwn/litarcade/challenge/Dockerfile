@@ -11,6 +11,7 @@ RUN apt-get -y update && apt-get install -y \
     git \
     libprotobuf-dev \
     libnl-route-3-dev \
+    libseccomp-dev \
     libtool \
     make \
     pkg-config \
