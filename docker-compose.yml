@@ -1,0 +1,44 @@
+version: "3.9"
+
+networks:
+    shared:
+        external: true
+    isolate-boring:
+        external: true
+    isolate-iloveseccomp:
+        external: true
+
+volumes:
+    ctf-data:
+        external: true
+
+services:
+    boring:
+        build: ./pwn/boring/challenge
+        restart: unless-stopped
+        ports:
+            - "31770:1337"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - isolate-boring
+        cap_drop:
+            - ALL
+
+    iloveseccomp:
+        build: ./pwn/iloveseccomp/challenge
+        restart: unless-stopped
+        ports:
+            - "31771:5000"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - isolate-iloveseccomp
+        cap_drop:
+            - ALL

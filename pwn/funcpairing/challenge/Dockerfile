@@ -1,4 +1,4 @@
-FROM ubuntu：22.04 as chroot
+FROM ubuntu:22.04 as chroot
 
 ARG DEBIAN_FRONTEND=noninteractive
 

@@ -1,4 +1,4 @@
-FROM ubuntu：20.04 as chroot
+FROM ubuntu:20.04 as chroot
 
 ARG DEBIAN_FRONTEND=noninteractive
 
