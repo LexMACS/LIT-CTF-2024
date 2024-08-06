@@ -203,3 +203,18 @@ services:
             - shared
         cap_drop:
             - ALL
+
+    kablewy:
+        build: ./web/kablewy
+        restart: unless-stopped
+        ports:
+            - "31782:5173"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - shared
+        cap_drop:
+            - ALL
