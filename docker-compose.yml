@@ -114,3 +114,92 @@ services:
             - isolate-bflat
         cap_drop:
             - ALL
+
+    # Web
+    kirbytime:
+        build: ./web/kirbytime
+        restart: unless-stopped
+        ports:
+            - "31776:8000"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - shared
+        cap_drop:
+            - ALL
+
+    jwt-2:
+        build: ./web/jwt-2
+        restart: unless-stopped
+        ports:
+            - "31777:3000"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - shared
+        cap_drop:
+            - ALL
+
+    retreat:
+        build: ./web/retreat
+        restart: unless-stopped
+        ports:
+            - "31778:3000"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - shared
+        cap_drop:
+            - ALL
+
+    anti-inspect:
+        build: ./web/anti-inspect
+        restart: unless-stopped
+        ports:
+            - "31779:8080"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.10'
+                    memory: 64M
+        networks:
+            - shared
+
+    scrainbow:
+        build: ./web/scrainbow
+        restart: unless-stopped
+        ports:
+            - "31780:3000"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - shared
+        cap_drop:
+            - ALL
+
+    jwt-1:
+        build: ./web/jwt-1
+        restart: unless-stopped
+        ports:
+            - "31781:3000"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
+        networks:
+            - shared
+        cap_drop:
+            - ALL
