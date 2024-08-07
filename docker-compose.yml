@@ -208,13 +208,11 @@ services:
         build: ./web/kablewy
         restart: unless-stopped
         ports:
-            - "31782:5173"
+            - "31782:8080"
         deploy:
             resources:
                 limits:
-                    cpus: '0.50'
-                    memory: 250M
+                    cpus: '0.10'
+                    memory: 64M
         networks:
             - shared
-        cap_drop:
-            - ALL
