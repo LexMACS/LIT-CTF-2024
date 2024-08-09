@@ -205,7 +205,7 @@ services:
             - ALL
 
     kablewy:
-        build: ./web/kablewy
+        build: ./rev/kablewy
         restart: unless-stopped
         ports:
             - "31782:8080"
@@ -214,5 +214,18 @@ services:
                 limits:
                     cpus: '0.10'
                     memory: 64M
+        networks:
+            - shared
+
+    srsa:
+        build: ./crypto/srsa
+        restart: unless-stopped
+        ports:
+            - "31783:4242"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 250M
         networks:
             - shared
