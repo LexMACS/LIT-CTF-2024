@@ -229,3 +229,16 @@ services:
                     memory: 250M
         networks:
             - shared
+
+    revsite1:
+        build: ./rev/revsite1
+        restart: unless-stopped
+        ports:
+            - "31784:8080"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.10'
+                    memory: 64M
+        networks:
+            - shared

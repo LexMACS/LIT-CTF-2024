@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask, request, redirect, render_template
-
+import time
 app = Flask(__name__)
 
 
@@ -16,6 +16,8 @@ def login():
             if password[i] != real[i]:
                 message = "incorrect"
                 return render_template('login.html', message=message)
+            else:
+                time.sleep(1)
         if password == real:
             message = "yayy! hi kirby"
 
