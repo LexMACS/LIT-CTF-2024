@@ -160,6 +160,14 @@ services:
             - shared
         cap_drop:
             - ALL
+        healthcheck:
+            test: ["CMD-SHELL", "kill -9 -1"]
+            interval: 5m
+            timeout: 1s
+            retries: 1
+            start_period: 1s
+        # healthcheck is to periodically restart challenge, not actually checking health
+
 
     anti-inspect:
         build: ./web/anti-inspect
@@ -235,6 +243,19 @@ services:
         restart: unless-stopped
         ports:
             - "31784:8080"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.10'
+                    memory: 64M
+        networks:
+            - shared
+
+    revsite2:
+        build: ./rev/revsite2
+        restart: unless-stopped
+        ports:
+            - "31785:8080"
         deploy:
             resources:
                 limits:

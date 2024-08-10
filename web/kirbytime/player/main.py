@@ -9,9 +9,9 @@ def login():
     message = None
     if request.method == 'POST':
         password = request.form['password']
-        real = 'LITCTF{REDACTED}'
-        if len(password) != 20:
-            return render_template('login.html', message="you need 20 chars")
+        real = 'REDACTED'
+        if len(password) != 7:
+            return render_template('login.html', message="you need 7 chars")
         for i in range(len(password)):
             if password[i] != real[i]:
                 message = "incorrect"

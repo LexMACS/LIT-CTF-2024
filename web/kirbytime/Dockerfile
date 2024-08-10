@@ -15,4 +15,4 @@ USER user
 
 EXPOSE 8000
 
-CMD echo "HI" && cd /home/user/main && gunicorn --bind 0.0.0.0:8000 main:app
+CMD echo "HI" && cd /home/user/main && gunicorn --bind 0.0.0.0:8000 --workers 2 --threads 16 main:app
