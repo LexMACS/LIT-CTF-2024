@@ -2,6 +2,7 @@
 
 cd /debug
 
+apt update
 apt install -y python3 python3-pip gdb git vim tmux elfutils
 
 rm /usr/lib/python*/EXTERNALLY-MANAGED
