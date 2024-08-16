@@ -1,0 +1,1 @@
+Due to the conspicious sleep(1) function, we can bruteforce each character by determining how long it takes for the server to check each password we send.

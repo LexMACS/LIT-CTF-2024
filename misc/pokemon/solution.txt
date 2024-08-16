@@ -1,0 +1,1 @@
+Win. Then, the sequence of flags given is semaphore for LITCTF{POKEAAAG}

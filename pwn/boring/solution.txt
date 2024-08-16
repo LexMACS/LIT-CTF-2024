@@ -1,0 +1,1 @@
+Solve script is located in challenge directory

@@ -1,0 +1,1 @@
+The server doesn't check for your token being signed correctly. This means you can make yourself an "admin" without signing the token  (which would require knowing the secret key)

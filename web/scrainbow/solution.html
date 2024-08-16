@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>scrainbow</title>
+    <!-- THIS IS NOT PART OF THE CHALLENGE -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div
+      class="fixed left-0 top-1/2 -translate-y-1/2 w-96 ml-5 flex flex-col gap-5"
+    >
+      <span>
+        Can you rearrange the grid to be a rainbow gradient from top left to
+        bottom right (red -> purple)?
+      </span>
+      <span>
+        Click on a square to select it, then click on another square to swap
+        them.
+      </span>
+      <button
+        id="test"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Test
+      </button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>
+      try {
+        eruda.init({
+          defaults: {
+            displaySize: 30,
+            theme: "Atom One Dark",
+            transparency: 1,
+          },
+        });
+        if (localStorage.getItem("eruda-auto-show") === "1") eruda.show();
+        window.addEventListener("keydown", (e) => {
+          const { key, ctrlKey } = e;
+          if (key === "e" && ctrlKey) {
+            e.preventDefault();
+            if (localStorage.getItem("eruda-auto-show") === "1") {
+              localStorage.setItem("eruda-auto-show", "0");
+              eruda.hide();
+            } else {
+              localStorage.setItem("eruda-auto-show", "1");
+              eruda.show();
+            }
+          }
+        });
+      } catch (e) {
+        alert(e);
+      }
+    </script>
+    <script async defer>
+      (async () => {
+        /** @type {string[]} */
+        const data = await fetch("/data").then((r) => r.json());
+
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const resize = () => {
+          const size = Math.min(window.innerWidth, window.innerHeight);
+          canvas.width = size;
+          canvas.height = size;
+        };
+        resize();
+        canvas.style.cssText = `position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);`;
+        document.body.appendChild(canvas);
+
+        const gridSize = await fetch("/gridSize").then((r) => r.json());
+
+        const render = () => {
+          const scale = canvas.width / gridSize;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          for (let i = 0; i < gridSize; i++) {
+            for (let j = 0; j < gridSize; j++) {
+              const x = i * scale;
+              const y = j * scale;
+              ctx.fillStyle = data[j * gridSize + i];
+              ctx.fillRect(x, y, scale, scale);
+            }
+          }
+          requestAnimationFrame(render);
+        };
+
+        requestAnimationFrame(render);
+
+        let selected = -1;
+
+        const moveHistory = [];
+
+        const move = (i, j) => {
+          if (selected === -1) {
+            selected = j * gridSize + i;
+          } else {
+            console.log("pushed move", moveHistory.length);
+            const temp = data[selected];
+            data[selected] = data[j * gridSize + i];
+            data[j * gridSize + i] = temp;
+            moveHistory.push([selected, j * gridSize + i]);
+
+            selected = -1;
+          }
+        };
+
+        canvas.addEventListener("click", (e) => {
+          const scale = canvas.width / gridSize;
+          const i = Math.floor(e.offsetX / scale);
+          const j = Math.floor(e.offsetY / scale);
+          move(i, j);
+        });
+
+        document.querySelector("#test").addEventListener("click", async () => {
+          const res = await fetch("/test", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data: moveHistory,
+            }),
+          })
+            .then((r) => r.text())
+            .then((r) => alert(r))
+            .catch((e) => alert(e));
+        });
+
+        const generateTarget = (size) => {
+          const hslToRgb = (h, s, l) => {
+            s /= size;
+            l /= size;
+
+            const k = (n) => (n + h / 30) % 12;
+            const a = s * Math.min(l, 1 - l);
+            const f = (n) =>
+              l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+
+            return [
+              Math.round(f(0) * 255),
+              Math.round(f(8) * 255),
+              Math.round(f(4) * 255),
+            ];
+          };
+
+          const rgbToHex = (r, g, b) => {
+            const toHex = (n) => n.toString(16).padStart(2, "0");
+            return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+          };
+          const result = new Array(size * size);
+
+          for (let y = 0; y < size; y++) {
+            for (let x = 0; x < size; x++) {
+              const index = y * size + x;
+              const hue = ((x + y) / (2 * size)) * 360; // Interpolating hue
+
+              const [r, g, b] = hslToRgb(hue, size, 50); // Full saturation and medium lightness
+
+              result[index] = rgbToHex(r, g, b);
+            }
+          }
+          return result;
+        };
+
+        const solve = () => {
+          const og = generateTarget(gridSize);
+          const swaps = [];
+          const d = [...data];
+          for (let i = 0; i < gridSize * gridSize; i++) {
+            if (d[i] !== og[i]) {
+              const index = d.indexOf(og[i], i);
+              if (index !== -1) {
+                swaps.push([i, index]);
+                [d[i], d[index]] = [d[index], d[i]];
+              }
+            }
+          }
+
+          swaps.forEach(([a, b]) => {
+            move(a % gridSize, Math.floor(a / gridSize));
+            move(b % gridSize, Math.floor(b / gridSize));
+          });
+        };
+
+        solve();
+      })();
+    </script>
+  </body>
+</html>

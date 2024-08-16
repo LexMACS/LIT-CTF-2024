@@ -1,0 +1,1 @@
+Go into the compile js file and base64 decode all the compressed vite inline web workers, then base64 deecode the stuff in the worker to get the worker's letter, combine the letters (There are 13) to get the flag
