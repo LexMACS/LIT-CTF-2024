@@ -148,7 +148,7 @@ services:
 
     retreat:
         build: ./web/retreat
-        restart: unless-stopped
+        restart: on-failure
         ports:
             - "31778:3000"
         deploy:
@@ -161,11 +161,11 @@ services:
         cap_drop:
             - ALL
         healthcheck:
-            test: ["CMD-SHELL", "kill -9 -1"]
+            test: ["CMD-SHELL", "curl -f http://litctf.org:31778/ || exit 1"]
             interval: 5m
-            timeout: 1s
-            retries: 1
-            start_period: 1s
+            timeout: 10s
+            retries: 3
+            start_period: 30s
         # healthcheck is to periodically restart challenge, not actually checking health
 
 
